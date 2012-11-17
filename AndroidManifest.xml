@@ -4,7 +4,7 @@
     android:versionName="1.0"
     android:installLocation="auto" >
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
     
     <permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 	<uses-permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" />
