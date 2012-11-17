@@ -22,11 +22,15 @@
 	<!-- Keeps the processor from sleeping when a message is received. -->
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 
+	<!--TODO: Allow backup is explicitly set to false for now as suggested by lint; if we want to allow backup
+	     we should investigate the usage of backup manager, than explicitly reallow that -->
     <application
         android:name=".AMRevolutionApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:allowBackup="false" >
+        
         <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
