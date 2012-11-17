@@ -237,12 +237,16 @@ public abstract class Http {
 	}
 	
 	private static RequestImpl makeRequest(Method method,String url,String ...params){
-		final String prefix = url.indexOf("://")==-1?"http":"";
+		//TODO better url format checks to be added
+		final String prefix = url.indexOf("://")==-1?"http://":"";
 		final StringBuilder b = new StringBuilder(prefix).append(url);
 		if(params!=null&&params.length>0){
 			if(params.length%2==0){
 				try {
-					b.append('?').append(params[0]).append('=').append(URLEncoder.encode(params[1],"UTF-8"));
+					if(url.indexOf('?')==-1){
+						b.append('?');
+					}
+					b.append(params[0]).append('=').append(URLEncoder.encode(params[1],"UTF-8"));
 					for(int i=2;i<params.length;i+=2){
 						b.append('&').append(params[i]).append('=').append(URLEncoder.encode(params[i+1], "UTF-8"));
 					}
