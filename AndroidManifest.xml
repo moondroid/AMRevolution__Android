@@ -1,0 +1,68 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="eu.areamobile.android.apps.amrevolution"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:installLocation="auto" >
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" />
+    
+    <permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" />
+	
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
+    <!-- App receives GCM messages. -->
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<!-- GCM requires a Google account. -->
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<!-- Keeps the processor from sleeping when a message is received. -->
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name=".AMRevolutionApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="it.android.euronics" />
+			</intent-filter>
+		</receiver>
+		
+        <service android:name=".GCMIntentService" />
+        
+        <service android:name=".service.AMDownloaderIntentService" />
+        
+        <provider android:name=".provider.AMRevolutionProvider"
+           android:authorities="eu.areamobile.apps.amrevolution.provider"
+           android:exported="false">
+		</provider>
+        
+        <activity
+            android:name=".activities.AMMainActivity"
+            android:label="@string/title_activity_ammain" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".activities.AMNewsActivity"
+            android:label="@string/News" >
+        </activity>
+        
+        <activity
+            android:name=".activities.AMSnippetsActivity"
+            android:label="@string/Snippets" >
+        </activity>
+    </application>
+
+</manifest>
