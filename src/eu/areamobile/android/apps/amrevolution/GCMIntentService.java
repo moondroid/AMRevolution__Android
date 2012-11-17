@@ -1,19 +1,14 @@
 package eu.areamobile.android.apps.amrevolution;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.google.android.gcm.GCMBaseIntentService;
 
 import eu.areamobile.android.apps.amrevolution.service.AMDownloaderIntentService;
 import eu.areamobile.android.apps.amrevolution.utils.Constants;
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 public class GCMIntentService extends GCMBaseIntentService {
 	
@@ -23,7 +18,8 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	@Override
 	protected void onError(Context context, String arg1) {
-		Toast.makeText(context, arg1, Toast.LENGTH_LONG);
+		//TODO Danilo line below creates a toast that is never shown?
+		//Toast.makeText(context, arg1, Toast.LENGTH_LONG);
 		Log.v("GCM onError", arg1);
 	}
 

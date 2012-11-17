@@ -2,6 +2,14 @@ package eu.areamobile.android.apps.amrevolution.service;
 
 import java.util.ArrayList;
 
+import android.app.IntentService;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import eu.areamobile.android.apps.amrevolution.bean.AMBeanCodesnippet;
@@ -12,16 +20,7 @@ import eu.areamobile.android.apps.amrevolution.bean.AMSnippetRequest;
 import eu.areamobile.android.apps.amrevolution.bean.AMSnippetResponse;
 import eu.areamobile.android.apps.amrevolution.provider.AMRevolutionContract;
 import eu.areamobile.android.apps.amrevolution.utils.Constants;
-import eu.areamobile.android.apps.amrevolution.utils.NET.Http;
-import eu.areamobile.android.apps.amrevolution.utils.NET.Http.Request;
 import eu.areamobile.android.apps.amrevolution.utils.NET.Http.Requests;
-import android.app.IntentService;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 
 public class AMDownloaderIntentService extends IntentService {
 	
