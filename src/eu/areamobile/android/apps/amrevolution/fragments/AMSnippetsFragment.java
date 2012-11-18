@@ -39,6 +39,7 @@ public class AMSnippetsFragment extends AMBaseFragment implements LoaderManager.
 		mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_2, null, new String[] { AMRevolutionContract.Snippets.Columns.ID },
 				new int[] { android.R.id.text1 }, 0);
 		mAdapterView.setAdapter(mAdapter);
+		mAdapterView.setOnItemClickListener(this);
 		getLoaderManager().initLoader(AMBaseActivity.SNIPPET_LOADER_ID, null, this);
 	}
 
