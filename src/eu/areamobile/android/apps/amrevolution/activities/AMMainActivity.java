@@ -22,6 +22,11 @@ public class AMMainActivity extends AMBaseActivity {
 
 		registerGoogleCloudMessaging();
 		
+		/* lancia AMNewsActivity */
+		Intent activityIntent = new Intent(this, AMNewsActivity.class);
+		startActivity(activityIntent);
+		finish();
+		
 	}
 
 	@Override
