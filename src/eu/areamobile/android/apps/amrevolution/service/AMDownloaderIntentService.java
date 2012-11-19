@@ -57,9 +57,20 @@ public class AMDownloaderIntentService extends IntentService {
 		else if(section.compareToIgnoreCase(Constants.SECTION_SNIPPET) == 0) {
 			performSnippetRequest(modality, custom_value);
 		}
+		
 	}
 
 	
+//	private void sendNotification() {
+//		
+//	}
+//
+//	private boolean isApplicationIsRunning() {
+//		ActivityManager manager = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+//		List<ActivityManager.RunningTaskInfo> taskInfo=manager.getRunningTasks(1);
+//		return taskInfo.get(0).topActivity.getPackageName().equalsIgnoreCase("eu.areamobile.android.apps.amrevolution");
+//	}
+
 	public static void startDownloaderService(Context packageContext, String section, String modality, String custom_value) {
     	Intent msgIntent = new Intent(packageContext, AMDownloaderIntentService.class);
     	msgIntent.putExtra(Constants.SECTION_KEY, section);
