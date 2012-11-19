@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ import eu.areamobile.android.apps.amrevolution.bean.AMNewsResponse;
 import eu.areamobile.android.apps.amrevolution.bean.AMSnippetRequest;
 import eu.areamobile.android.apps.amrevolution.bean.AMSnippetResponse;
 import eu.areamobile.android.apps.amrevolution.provider.AMRevolutionContract;
+import eu.areamobile.android.apps.amrevolution.receiver.NotificationReceiver;
 import eu.areamobile.android.apps.amrevolution.utils.Constants;
 import eu.areamobile.android.apps.amrevolution.utils.NET.Http.Requests;
 
@@ -57,9 +59,13 @@ public class AMDownloaderIntentService extends IntentService {
 		else if(section.compareToIgnoreCase(Constants.SECTION_SNIPPET) == 0) {
 			performSnippetRequest(modality, custom_value);
 		}
-		
 	}
 
+	private void sendNotificationBroadcast(Uri uri){
+		final Intent intent=new Intent(this,NotificationReceiver.class);
+		intent.setData(uri);
+		sendBroadcast(intent);
+	}
 	
 //	private void sendNotification() {
 //		
@@ -110,6 +116,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanNews myAMBeanNews : myAMBeanNewsList) {
 				insertToNews(myAMBeanNews);
 			}
+			sendNotificationBroadcast(AMRevolutionContract.News.CONTENT_URI);
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMNewsResponse");
@@ -145,6 +152,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanCodesnippet myAMBeanCodesnippet : myAMBeanCodesnippetList) {
 				insertToSnippets(myAMBeanCodesnippet);
 			}
+			sendNotificationBroadcast(AMRevolutionContract.Snippets.CONTENT_URI);
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMSnippetResponse");
@@ -152,7 +160,7 @@ public class AMDownloaderIntentService extends IntentService {
 	}
 	
 	
-	private void insertToNews(AMBeanNews myAMBeanNews) {
+	private Uri insertToNews(AMBeanNews myAMBeanNews) {
 		// insert data through content provider
 		ContentResolver myContentResolver = this.getContentResolver();
 		
@@ -160,11 +168,11 @@ public class AMDownloaderIntentService extends IntentService {
 				myAMBeanNews.getTimestamp(), myAMBeanNews.getTitle(), myAMBeanNews.getBody(),
 				myAMBeanNews.getImg_url(), myAMBeanNews.getWeb_url());
 		
-		myContentResolver.insert(AMRevolutionContract.News.CONTENT_URI, myContentValues);
+		return myContentResolver.insert(AMRevolutionContract.News.CONTENT_URI, myContentValues);
 	}
 	
 	
-	private void insertToSnippets(AMBeanCodesnippet myAMBeanCodesnippet) {
+	private Uri insertToSnippets(AMBeanCodesnippet myAMBeanCodesnippet) {
 		// insert data through content provider
 		ContentResolver myContentResolver = this.getContentResolver();
 		
@@ -172,6 +180,6 @@ public class AMDownloaderIntentService extends IntentService {
 				myAMBeanCodesnippet.getTimestamp(), myAMBeanCodesnippet.getLanguage_type(), myAMBeanCodesnippet.getTitle(), 
 				myAMBeanCodesnippet.getCode());
 		
-		myContentResolver.insert(AMRevolutionContract.Snippets.CONTENT_URI, myContentValues);
+		return myContentResolver.insert(AMRevolutionContract.Snippets.CONTENT_URI, myContentValues);
 	}
 }

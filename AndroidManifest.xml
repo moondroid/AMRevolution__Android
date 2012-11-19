@@ -39,6 +39,9 @@
 			</intent-filter>
 		</receiver>
 		
+        <receiver android:name=".receiver.NotificationReceiver"
+            android:exported="false"/>
+        
         <service android:name=".GCMIntentService" />
         
         <service android:name=".service.AMDownloaderIntentService" />
@@ -61,6 +64,7 @@
         <activity
             android:name=".activities.AMNewsActivity"
             android:label="@string/News" >
+            
         </activity>
         
         <activity
