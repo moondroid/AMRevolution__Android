@@ -22,6 +22,11 @@ public class AMMainActivity extends AMBaseActivity {
 
 		registerGoogleCloudMessaging();
 		
+		/* starts AMNewsActivity */
+		Intent activityIntent = new Intent(this, AMNewsActivity.class);
+		startActivity(activityIntent);
+		finish();
+		
 	}
 
 	@Override
@@ -49,9 +54,6 @@ public class AMMainActivity extends AMBaseActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_settings:{
-			Log.d(TAG, "on settings item clicked");
-		}break;
 		case R.id.news_activity:{
 			Intent activityIntent = new Intent(this, AMNewsActivity.class);
 			startActivity(activityIntent);

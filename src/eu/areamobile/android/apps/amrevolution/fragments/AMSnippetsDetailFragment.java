@@ -1,5 +1,7 @@
 package eu.areamobile.android.apps.amrevolution.fragments;
 
+import java.util.Date;
+
 import eu.areamobile.android.apps.amrevolution.R;
 import eu.areamobile.android.apps.amrevolution.provider.AMRevolutionContract;
 import android.database.Cursor;
@@ -16,6 +18,8 @@ public class AMSnippetsDetailFragment extends AMBaseFragment{
 	private final static String SNIPPETS_URI_KEY = "SNIPPETS_URI_KEY";
 	private Uri mSnippetsUri;
 	private TextView mTitleTextView;
+	private TextView mLanguageTextView;
+	private TextView mDateTextView;
 	private TextView mCodeTextView;
 	
 	public static AMSnippetsDetailFragment newInstance(Uri snippetsUri){
@@ -31,6 +35,8 @@ public class AMSnippetsDetailFragment extends AMBaseFragment{
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.snippets_detail_layout, container, false);
 		mTitleTextView = (TextView)v.findViewById(R.id.tv_snippets_detail_title);
+		mLanguageTextView = (TextView)v.findViewById(R.id.tv_snippets_detail_language);
+		mDateTextView = (TextView)v.findViewById(R.id.tv_snippets_detail_date);
 		mCodeTextView = (TextView)v.findViewById(R.id.tv_snippets_detail_body);
 		return v;
 	}
@@ -55,14 +61,20 @@ public class AMSnippetsDetailFragment extends AMBaseFragment{
 	private void fillDataByUri(Uri uri) {
 		String[] projection = { 
 			AMRevolutionContract.Snippets.Columns.TITLE,
-			AMRevolutionContract.Snippets.Columns.CODE,
+			AMRevolutionContract.Snippets.Columns.LANG,
+			AMRevolutionContract.Snippets.Columns.TIME_STAMP,
+			AMRevolutionContract.Snippets.Columns.CODE
 		};
 		Cursor cursor = getActivity().getContentResolver().query(uri,projection,null,null,null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			String title = cursor.getString(cursor.getColumnIndex(AMRevolutionContract.Snippets.Columns.TITLE));
+			String language = cursor.getString(cursor.getColumnIndex(AMRevolutionContract.Snippets.Columns.LANG));
+			Long date = cursor.getLong(cursor.getColumnIndex(AMRevolutionContract.Snippets.Columns.TIME_STAMP));
 			String body = cursor.getString(cursor.getColumnIndex(AMRevolutionContract.Snippets.Columns.CODE));
-			mTitleTextView.setText(title);
+			mTitleTextView.setText(title!=null?title:"");
+			mLanguageTextView.setText(language!=null?language:"");
+			mDateTextView.setText(new Date(date).toLocaleString());
 			mCodeTextView.setText(body);
 			cursor.close();
 		}
