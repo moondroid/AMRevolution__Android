@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class AMRevolutionProvider extends ContentProvider{
+	private static final String STATE_RECORD_MATCH = AMRevolutionStateContract.Columns.ID+" = "+AMRevolutionStateContract.REC_ID;
+
 	public final static String TAG = AMRevolutionProvider.class.getSimpleName();
 	
 	private AMRDBOpenHelper mDB;
@@ -31,6 +33,7 @@ public class AMRevolutionProvider extends ContentProvider{
 		case AMRevolutionContract.News.ITEM_TOKEN: return AMRevolutionContract.News.CONTENT_TYPE_ITEM;
 		case AMRevolutionContract.Snippets.TOKEN: return AMRevolutionContract.Snippets.CONTENT_TYPE_DIR;
 		case AMRevolutionContract.Snippets.ITEM_TOKEN: return AMRevolutionContract.Snippets.CONTENT_TYPE_ITEM;
+		case AMRevolutionStateContract.TOKEN:return AMRevolutionStateContract.CONTENT_TYPE;
 		default: return null;
 		}
 	}
@@ -64,6 +67,10 @@ public class AMRevolutionProvider extends ContentProvider{
 			qb.setTables(AMRevolutionContract.Snippets.PATH);
 			qb.appendWhere(AMRevolutionContract.CommonColumns.TIME_STAMP+ " > "+uri.getLastPathSegment());
 			break;
+		case AMRevolutionStateContract.TOKEN:
+			qb.setTables(AMRevolutionStateContract.PATH);
+			qb.appendWhere(STATE_RECORD_MATCH);
+			break;
 		default: 
 			throw unsupportedUri(uri);
 		}
@@ -88,6 +95,7 @@ public class AMRevolutionProvider extends ContentProvider{
 		case AMRevolutionContract.Snippets.TOKEN: 
 			table = AMRevolutionContract.Snippets.PATH;
 			break;
+		case AMRevolutionStateContract.TOKEN:
 		case AMRevolutionContract.Snippets.ITEM_TOKEN:
 		case AMRevolutionContract.News.ITEM_TOKEN:			
 		default: throw unsupportedUri(uri);
@@ -126,6 +134,13 @@ public class AMRevolutionProvider extends ContentProvider{
 			where = TextUtils.isEmpty(selection)?getWhereId(uri):
 				(getWhereId(uri)+ " AND ("+selection+')');
 			break;
+		case AMRevolutionStateContract.TOKEN:
+			table = AMRevolutionStateContract.PATH;
+			where = TextUtils.isEmpty(selection)?STATE_RECORD_MATCH:
+				(STATE_RECORD_MATCH+" AND ("+selection+')');
+			//Prevent id update
+			values.remove(AMRevolutionStateContract.Columns.ID);
+			break;
 		default: throw unsupportedUri(uri);
 		}
 		
@@ -162,6 +177,8 @@ public class AMRevolutionProvider extends ContentProvider{
 			where = TextUtils.isEmpty(selection)?getWhereId(uri):
 				(getWhereId(uri)+ " AND ("+selection+')');
 			break;
+		case AMRevolutionStateContract.TOKEN:
+			return update(uri, ProviderConstants.INITIAL_STATE, selection, selectionArgs);
 		default: throw unsupportedUri(uri);
 		}
 		

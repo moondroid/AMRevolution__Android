@@ -9,12 +9,12 @@ public final class AMRevolutionContract {
 	
 	final static String AUTHORITY = "eu.areamobile.apps.amrevolution.provider";
 	
-	private final static Uri BASE_URI = Uri.parse("content://"+AUTHORITY);
+	final static Uri BASE_URI = Uri.parse("content://"+AUTHORITY);
 	
 	
 	private static final String VND_MIME_PREFIX = "vnd.amrevolution.";
 	private final static String CURSOR_DIR_BASE_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE+'/'+VND_MIME_PREFIX;
-	private final static String CURSOR_ITEM_BASE_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE+'/'+VND_MIME_PREFIX;
+	final static String CURSOR_ITEM_BASE_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE+'/'+VND_MIME_PREFIX;
 	
 	public final static class News{
 		private News(){};
