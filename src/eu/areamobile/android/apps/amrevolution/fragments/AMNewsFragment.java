@@ -48,7 +48,8 @@ public class AMNewsFragment extends AMBaseFragment implements LoaderManager.Load
 	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		CursorLoader loader = new CursorLoader(getActivity(), AMRevolutionContract.News.CONTENT_URI, null, null, null, null);
+		String sortOrder = AMRevolutionContract.News.Columns.TIME_STAMP+" DESC";
+		CursorLoader loader = new CursorLoader(getActivity(), AMRevolutionContract.News.CONTENT_URI, null, null, null, sortOrder);
 		return loader;
 	}
 

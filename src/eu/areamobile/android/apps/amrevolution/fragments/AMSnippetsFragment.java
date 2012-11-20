@@ -48,7 +48,8 @@ public class AMSnippetsFragment extends AMBaseFragment implements LoaderManager.
 	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		CursorLoader loader = new CursorLoader(getActivity(), AMRevolutionContract.Snippets.CONTENT_URI, null, null, null, null);
+		String sortOrder = AMRevolutionContract.News.Columns.TIME_STAMP+" DESC";
+		CursorLoader loader = new CursorLoader(getActivity(), AMRevolutionContract.Snippets.CONTENT_URI, null, null, null, sortOrder);
 		return loader;
 
 	}
