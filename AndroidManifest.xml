@@ -6,10 +6,15 @@
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
     
+    <!-- permission to read and write state -->
+    <permission android:name="eu.areamobile.android.apps.amrevolution.permission.CHECK_STATE" android:protectionLevel="signature"/>
+    <uses-permission android:name="eu.areamobile.android.apps.amrevolution.permission.CHECK_STATE"/>
+    
     <permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 	<uses-permission android:name="eu.areamobile.android.apps.amrevolution.permission.C2D_MESSAGE" />
 	
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<!-- DANILO check unused permissions -->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -35,6 +40,7 @@
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
 				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<!-- DANILO why this? -->
 				<category android:name="it.android.euronics" />
 			</intent-filter>
 		</receiver>
@@ -49,6 +55,9 @@
         <provider android:name=".provider.AMRevolutionProvider"
            android:authorities="eu.areamobile.apps.amrevolution.provider"
            android:exported="false">
+			<!-- state is accessible only inside the app so we could export the provider for other application profit once the api is stable -->
+			<path-permission android:path="/state" 
+			    android:permission="eu.areamobile.android.apps.amrevolution.permission.CHECK_STATE"/>
 		</provider>
         
         <activity
