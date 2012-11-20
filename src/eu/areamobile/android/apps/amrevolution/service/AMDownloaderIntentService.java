@@ -61,9 +61,10 @@ public class AMDownloaderIntentService extends IntentService {
 		}
 	}
 
-	private void sendNotificationBroadcast(Uri uri){
+	private void sendNotificationBroadcast(Uri uri,int count){
 		final Intent intent=new Intent(this,NotificationReceiver.class);
 		intent.setData(uri);
+		intent.putExtra(NotificationReceiver.EXTRA_COUNT, count);
 		sendBroadcast(intent);
 	}
 	
@@ -116,7 +117,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanNews myAMBeanNews : myAMBeanNewsList) {
 				insertToNews(myAMBeanNews);
 			}
-			sendNotificationBroadcast(AMRevolutionContract.News.CONTENT_URI);
+			sendNotificationBroadcast(AMRevolutionContract.News.CONTENT_URI,myAMBeanNewsList.size());
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMNewsResponse");
@@ -152,7 +153,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanCodesnippet myAMBeanCodesnippet : myAMBeanCodesnippetList) {
 				insertToSnippets(myAMBeanCodesnippet);
 			}
-			sendNotificationBroadcast(AMRevolutionContract.Snippets.CONTENT_URI);
+			sendNotificationBroadcast(AMRevolutionContract.Snippets.CONTENT_URI,myAMBeanCodesnippetList.size());
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMSnippetResponse");
