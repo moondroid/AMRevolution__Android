@@ -39,7 +39,7 @@ public class NotificationReceiver extends BroadcastReceiver{
 				Log.i(TAG, "Delivering notification, application is not running");
 				// Update pending notifications count
 				final int pendingNotifications = prefs.getInt(PENDING_NOTIFICATIONS,0)+intent.getIntExtra(EXTRA_COUNT, 1);
-				prefs.edit().putInt(EXTRA_COUNT, pendingNotifications).commit();
+				prefs.edit().putInt(PENDING_NOTIFICATIONS, pendingNotifications).commit();
 				
 				final NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 				
@@ -54,6 +54,7 @@ public class NotificationReceiver extends BroadcastReceiver{
 										.build();
 				
 				manager.notify(NOTIFICATION_ID, notify);
+				
 			}
 		}
 	}
