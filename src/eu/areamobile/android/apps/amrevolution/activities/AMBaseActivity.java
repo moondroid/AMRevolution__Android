@@ -8,4 +8,5 @@ public class AMBaseActivity extends FragmentActivity {
 	public final static int NEWS_LOADER_ID = 0;
 	public final static int SNIPPET_LOADER_ID = 1;
 	
+	
 }
