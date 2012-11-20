@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".fragments.AMSnippetsFragment" >
 
-    <LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <ListView
+        android:id="@+id/snippet_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".fragments.AMSnippetsFragment" >
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:cacheColorHint="#0000" />
 
-        <ListView
-            android:id="@+id/snippet_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9"
-            android:cacheColorHint="#0000" />
+    <Button
+        android:id="@+id/btn_to_news_activity"
+        style="@style/ButtonStyle1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/News" />
 
-        <Button
-            android:id="@+id/btn_to_news_activity"
-            style="@style/ButtonStyle1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="@string/News" />
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>
