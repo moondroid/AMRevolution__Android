@@ -37,12 +37,12 @@ class ProviderConstants {
 		
 		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.News.PATH, AMRevolutionContract.News.TOKEN);
 		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.News.PATH_FOR_ID, AMRevolutionContract.News.ITEM_TOKEN);
-		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.News.SINCE_TIMESTAMP_PATH, AMRevolutionContract.Snippets.ITEM_TOKEN);
+		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.News.SINCE_TIMESTAMP_PATH, AMRevolutionContract.News.TIMED_TOKEN);
 		
 		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.Snippets.PATH, AMRevolutionContract.Snippets.TOKEN);
 		
 		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.Snippets.PATH_FOR_ID, AMRevolutionContract.Snippets.ITEM_TOKEN);
-		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.Snippets.SINCE_TIMESTAMP_PATH, AMRevolutionContract.Snippets.ITEM_TOKEN);
+		m.addURI(AMRevolutionContract.AUTHORITY, AMRevolutionContract.Snippets.SINCE_TIMESTAMP_PATH, AMRevolutionContract.Snippets.TIMED_TOKEN);
 		
 		return m;
 	}
