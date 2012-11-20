@@ -40,8 +40,7 @@
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
 				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<!-- DANILO why this? -->
-				<category android:name="it.android.euronics" />
+				<category android:name="eu.areamobile.android.apps.amrevolution" />
 			</intent-filter>
 		</receiver>
 		
