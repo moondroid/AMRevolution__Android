@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,6 +21,7 @@ import eu.areamobile.android.apps.amrevolution.bean.AMNewsResponse;
 import eu.areamobile.android.apps.amrevolution.bean.AMSnippetRequest;
 import eu.areamobile.android.apps.amrevolution.bean.AMSnippetResponse;
 import eu.areamobile.android.apps.amrevolution.provider.AMRevolutionContract;
+import eu.areamobile.android.apps.amrevolution.receiver.NotificationReceiver;
 import eu.areamobile.android.apps.amrevolution.utils.Constants;
 import eu.areamobile.android.apps.amrevolution.utils.NET.Http;
 import eu.areamobile.android.apps.amrevolution.utils.NET.Http.Requests;
@@ -66,7 +68,23 @@ public class AMDownloaderIntentService extends IntentService {
 		}
 	}
 
+	private void sendNotificationBroadcast(Uri uri,int count){
+		final Intent intent=new Intent(this,NotificationReceiver.class);
+		intent.setData(uri);
+		intent.putExtra(NotificationReceiver.EXTRA_COUNT, count);
+		sendBroadcast(intent);
+	}
 	
+//	private void sendNotification() {
+//		
+//	}
+//
+//	private boolean isApplicationIsRunning() {
+//		ActivityManager manager = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+//		List<ActivityManager.RunningTaskInfo> taskInfo=manager.getRunningTasks(1);
+//		return taskInfo.get(0).topActivity.getPackageName().equalsIgnoreCase("eu.areamobile.android.apps.amrevolution");
+//	}
+
 	public static void startDownloaderService(Context packageContext, String section, String modality, String custom_value) {
     	Intent msgIntent = new Intent(packageContext, AMDownloaderIntentService.class);
     	msgIntent.putExtra(Constants.SECTION_KEY, section);
@@ -106,6 +124,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanNews myAMBeanNews : myAMBeanNewsList) {
 				insertToNews(myAMBeanNews);
 			}
+			sendNotificationBroadcast(AMRevolutionContract.News.CONTENT_URI,myAMBeanNewsList.size());
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMNewsResponse");
@@ -141,6 +160,7 @@ public class AMDownloaderIntentService extends IntentService {
 			for(AMBeanCodesnippet myAMBeanCodesnippet : myAMBeanCodesnippetList) {
 				insertToSnippets(myAMBeanCodesnippet);
 			}
+			sendNotificationBroadcast(AMRevolutionContract.Snippets.CONTENT_URI,myAMBeanCodesnippetList.size());
 		}
 		else {
 			Log.i("AMDownloaderIntentService", "Cannot cast string downloaded into AMSnippetResponse");
@@ -156,8 +176,8 @@ public class AMDownloaderIntentService extends IntentService {
 		Log.i("after performUploadRegId", myResponseStream.asString());
 	}
 	
-	
-	private void insertToNews(AMBeanNews myAMBeanNews) {
+
+	private Uri insertToNews(AMBeanNews myAMBeanNews) {
 		// insert data through content provider
 		ContentResolver myContentResolver = this.getContentResolver();
 		
@@ -165,11 +185,11 @@ public class AMDownloaderIntentService extends IntentService {
 				myAMBeanNews.getTimestamp(), myAMBeanNews.getTitle(), myAMBeanNews.getBody(),
 				myAMBeanNews.getImg_url(), myAMBeanNews.getWeb_url());
 		
-		myContentResolver.insert(AMRevolutionContract.News.CONTENT_URI, myContentValues);
+		return myContentResolver.insert(AMRevolutionContract.News.CONTENT_URI, myContentValues);
 	}
 	
 	
-	private void insertToSnippets(AMBeanCodesnippet myAMBeanCodesnippet) {
+	private Uri insertToSnippets(AMBeanCodesnippet myAMBeanCodesnippet) {
 		// insert data through content provider
 		ContentResolver myContentResolver = this.getContentResolver();
 		
@@ -177,6 +197,6 @@ public class AMDownloaderIntentService extends IntentService {
 				myAMBeanCodesnippet.getTimestamp(), myAMBeanCodesnippet.getLanguage_type(), myAMBeanCodesnippet.getTitle(), 
 				myAMBeanCodesnippet.getCode());
 		
-		myContentResolver.insert(AMRevolutionContract.Snippets.CONTENT_URI, myContentValues);
+		return myContentResolver.insert(AMRevolutionContract.Snippets.CONTENT_URI, myContentValues);
 	}
 }
