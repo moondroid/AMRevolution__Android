@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,9 @@ import eu.areamobile.android.apps.amrevolution.bean.AMSnippetResponse;
 import eu.areamobile.android.apps.amrevolution.provider.AMRevolutionContract;
 import eu.areamobile.android.apps.amrevolution.receiver.NotificationReceiver;
 import eu.areamobile.android.apps.amrevolution.utils.Constants;
+import eu.areamobile.android.apps.amrevolution.utils.NET.Http;
 import eu.areamobile.android.apps.amrevolution.utils.NET.Http.Requests;
+import eu.areamobile.android.apps.amrevolution.utils.NET.Http.ResponseStream;
 
 public class AMDownloaderIntentService extends IntentService {
 	
@@ -58,6 +61,10 @@ public class AMDownloaderIntentService extends IntentService {
 		// fetch all news which timestamps are bigger than timestamp passed as custom_value
 		else if(section.compareToIgnoreCase(Constants.SECTION_SNIPPET) == 0) {
 			performSnippetRequest(modality, custom_value);
+		}
+		// upload google registration id
+		else if(section.compareToIgnoreCase(Constants.SECTION_REGID) == 0) {
+			performUploadRegId(custom_value);
 		}
 	}
 
@@ -161,6 +168,15 @@ public class AMDownloaderIntentService extends IntentService {
 	}
 	
 	
+	private void performUploadRegId(String custom_value) {
+		Log.i("before performUploadRegId", custom_value);
+		
+		ResponseStream myResponseStream = Http.post(Constants.REGID_ADDER_SERVICE).body(Constants.POST_REGID_KEY, custom_value, Constants.POST_DEVICE_MODEL_KEY, Build.MODEL).execute();
+		
+		Log.i("after performUploadRegId", myResponseStream.asString());
+	}
+	
+
 	private Uri insertToNews(AMBeanNews myAMBeanNews) {
 		// insert data through content provider
 		ContentResolver myContentResolver = this.getContentResolver();

@@ -35,6 +35,9 @@ public class GCMIntentService extends GCMBaseIntentService {
 		((AMRevolutionApplication)getApplication()).myRegId = regId;
 		//ServerPushNotification myServerPushNotification = new ServerPushNotification(context, regId);
     	//myServerPushNotification.execute();
+		
+		// post regId to AMRevolution server
+		AMDownloaderIntentService.startDownloaderService(context, Constants.SECTION_REGID, Constants.MODALITY_ID, regId);
 	}
 
 	@Override
