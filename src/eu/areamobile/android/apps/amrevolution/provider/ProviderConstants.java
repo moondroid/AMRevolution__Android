@@ -13,7 +13,7 @@ class ProviderConstants {
 	
 	final static String CREATE_STATE_TABLE = CREATE_TABLE+ AMRevolutionStateContract.PATH + '('
 				+AMRevolutionStateContract.Columns.ID+ " INTEGER PRIMARY KEY, "
-				+AMRevolutionStateContract.Columns.LAST_TRY+ " INTEGER NOT NULL, "
+				+AMRevolutionStateContract.Columns.LAST_UPDATE+ " INTEGER NOT NULL, "
 				+AMRevolutionStateContract.Columns.STATE+ " INTEGER NOT NULL, "
 				+AMRevolutionStateContract.Columns.LAST_TRY+ " INTEGER NOT NULL"
 				+')';
